@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, } from "react";
 import {
     StyleSheet,
     Text,
@@ -9,154 +9,145 @@ import {
     Modal,
     SafeAreaView,
     Dimensions,
-    ScrollView
+    ScrollView,
+    RefreshControl
 } from "react-native";
-//import { Provider, connect } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 //import userInfos from './functionUserInfos';
 import SingleTheme from "../components/singleTheme";
 import SingleModule from '../components/singleModule';
+import { Icon } from 'react-native-elements';
+import getData from '../components/functionGetData';
+
+
+
 const windowHeight = Dimensions.get('window').height;
-
-
 
 function Home(props) {
 
-    const [themes, setThemes] = useState([
-        {
-            id:1,
-            name: "Commerce",
-            color:"#009e0f"
-        },
-        {
-            id:2,
-            name: "Développement personnel",
-            color:"#2b78e4"
-        },
-        {
-            id:3,
-            name: "Synergologie",
-            color:"#ff9900"
-        },
-    ]);
-    const [modules, setModules] = useState([
-        {
-            id:1,
-            name: "Les 7 étapes de la vente",
-            logo: "bars",
-            excerpt:"La concentration et la gestion des émotions restent prépondérantes pour finir par la conclusion de la vente. Nous venons de traverser de façon détaillé...",
-            idTheme: 1
-        },
-        {
-            id:2,
-            name: "L'écoute active",
-            logo: "assistive-listening-systems",
-            excerpt:"La concentration et la gestion des émotions restent prépondérantes pour finir par la conclusion de la vente. Nous venons de traverser de façon détaillé...",
-            idTheme: 2,
-        },
-        {
-            id:3,
-            name: "La logique gestuelle",
-            logo: "handshake",
-            excerpt:"La concentration et la gestion des émotions restent prépondérantes pour finir par la conclusion de la vente. Nous venons de traverser de façon détaillé...",
-            idTheme: 3,
-        },
-    ]);
-    const [modulesFilter, setModulesFilter] = useState(modules);
-    const[themeActive, setThemeActive] = useState();
+    const [themeActive, setThemeActive] = useState();
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         props.navigation.setOptions({
-          headerRight: () => (
-            <TouchableOpacity style={styles.btnObjectifs} onPress={() => props.navigation.navigate('Objectifs')}>
-                <Text style={{fontSize:22}}>2</Text>
-            </TouchableOpacity>
-          ),
+            headerRight: () => (
+                <TouchableOpacity style={styles.btnObjectifs} onPress={() => props.navigation.navigate('Objectifs')}>
+                    <Text style={{ fontSize: 22 }}>{props.data.login.data.objectifs.filter(objectif => objectif.isDone == true).length}</Text>
+                </TouchableOpacity>
+            ),
+            headerLeft: () => (
+                <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => props.navigation.navigate('Settings')}>
+                    <Icon size={25} name="user-circle" type='font-awesome-5' color="#000" />
+                </TouchableOpacity>
+            ),
+            headerTitle: () => (
+                <Image style={styles.image} source={require("../assets/logo.png")} />
+            ),
+            headerStyle: {
+                height: 165
+            }
         });
     }, [props.navigation]);
 
     const filterModules = (idTheme) => {
-        if(themeActive == idTheme){
-            setModulesFilter(modules);      
+        if (themeActive == idTheme) {
             setThemeActive();
         }
-        else{
-            setModulesFilter(modules.filter( i => i.id == idTheme ));      
+        else {
             setThemeActive(idTheme);
         }
-      
     }
 
+    const _onRefresh = () => {
+        setRefreshing(true);
+        getData(props,false);
+        setRefreshing(false);
+    }
+
+
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView>
-                <View style={styles.header}>
-                    <Image style={styles.image} source={require("../assets/logo.png")} />
-                </View>
+        <View style={styles.container}>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={_onRefresh}
+                    />}>
                 <View style={styles.filtres}>
-                {   themes.map((item) => {
+                    {props.data.login.data.themes.map((item) => {
                         return (
-                            <SingleTheme themeActive={themeActive} key={item.id} theme={item} filterModules={filterModules}></SingleTheme>
+                            <SingleTheme themeActive={themeActive} key={item._id} theme={item} filterModules={filterModules}></SingleTheme>
                         )
                     })
                 }
                 </View>
                 <View style={styles.modules}>
-                    <View style={{ width:"90%"}}>
-                {   modulesFilter.map((item) => {
-                        return (
-                          <SingleModule key={item.id} module={item}></SingleModule>
-                        )
-                    })
-                }
-                </View>
+                    <View style={{ width: "90%" }}>
+                        {props.data.login.data.modules.map((item) => {
+                            return (
+                                <View key={item._id} style={{display: themeActive != null && themeActive != item.idTheme ? 'none' : 'flex'}}>
+                                    <SingleModule themeActive={themeActive} props={props} key={item._id} module={item}></SingleModule>
+                                </View>
+                            )
+                        })
+                    }
+                    </View>
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 
-export default Home;
+const mapStateToProps = state => ({
+    data: state,
+});
+
+export default connect(mapStateToProps)(Home);
 
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex:1,
+        backgroundColor: "#f6f6f6",
     },
-    header:{
-        display:"flex",
-        flexDirection:"row",
-        justifyContent:"center",
-        alignItems:"center",
-        paddingLeft:20,
-        paddingRight:20
+    header: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative",
     },
-    image:{
-        width:100, 
-        height:100,
-    }, 
-    btnObjectifs:{
-        borderWidth:3,
-        borderColor:"#f1c232",
-        borderRadius:500,
-        width:38,
-        height:38,
-        display:"flex",
-        alignItems:"center",
-        justifyContent:"center",
-        marginRight:15,
+    image: {
+        width: 100,
+        height: 100,
+        marginBottom:20
     },
-    filtres:{
-        display:"flex",
-        alignItems:"center",
-        justifyContent:"space-between",
-        flexDirection:"row",
-        marginTop:10,
-        padding:15
+    btnObjectifs: {
+        borderWidth: 3,
+        borderColor: "#f1c232",
+        borderRadius: 500,
+        width: 38,
+        height: 38,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        marginRight: 15,
+    },
+    filtres: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        paddingBottom:0,
+        marginLeft:20, 
+        marginRight:20,
+        marginTop:20
     },
 
-    modules:{
-        width:"100%",
-        display:"flex",
-        alignItems:"center",
+    modules: {
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        paddingBottom:40
     }
 });

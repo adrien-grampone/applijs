@@ -8,14 +8,15 @@ const windowHeight = Dimensions.get('window').height;
 export default function SingleTheme(props){
 
     return(
-        <TouchableOpacity style={[props.themeActive == props.theme.id ? {backgroundColor:props.theme.color, padding:10, position:"relative", borderRadius:10, width:"33%", display:"flex", flexDirection:"row-reverse", alignItems:"center",justifyContent:"center"} : styles.theme]} onPress={() => props.filterModules(props.theme.id)}>
+        
+        <TouchableOpacity style={[props.themeActive == props.theme._id ? {backgroundColor:props.theme.color, padding:10, position:"relative", borderRadius:10, display:"flex", flexDirection:"row-reverse", alignItems:"center",justifyContent:"center"} : styles.theme]} onPress={() => props.filterModules(props.theme._id)}>
             {
-                props.themeActive == props.theme.id &&
+                props.themeActive == props.theme._id &&
                 (
                     <View style={styles.removeFilter}><Icon size={12} name='times' type='font-awesome' color="#000" /></View>
                 )
             }
-            <Text style={[props.themeActive == props.theme.id ? {color:"#fff", fontWeight:"700", textAlign:"center", fontSize:12} : {color:props.theme.color, fontWeight:"600", textAlign:"center", fontSize:12}]}>{props.theme.name}</Text>
+            <Text style={[props.themeActive == props.theme._id ? {color:"#fff", fontWeight:"700", textAlign:"center", fontSize:12} : {color:props.theme.color, fontWeight:"600", textAlign:"center", fontSize:12,  overflow: "hidden"}]}>{props.theme.name}</Text>
         </TouchableOpacity>
     )
 }
@@ -23,8 +24,6 @@ export default function SingleTheme(props){
 
 const styles = StyleSheet.create({
     theme:{
-        padding:10,
-        width: "33%",
         display:"flex", 
         alignItems:"center",
         justifyContent:"center"

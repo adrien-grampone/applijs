@@ -8,10 +8,14 @@ import {
     TouchableOpacity,
     Modal,
     SafeAreaView,
-    Dimensions
+    Dimensions,
+    Alert
 } from "react-native";
-//import { Provider, connect } from 'react-redux';
-//import userInfos from './functionUserInfos';
+import { Provider, connect } from 'react-redux';
+import getData from './functionGetData';
+import axios from 'axios';
+
+
 const windowHeight = Dimensions.get('window').height;
 
 
@@ -27,24 +31,17 @@ function ConnexionScreen(props) {
 
 
     function login(email, password) {
-        props.navigation.replace('Accueil');
-        /*axios.post(variablesGlobales.api+"api/login_check",{
-          username: email,
-          password: password
-        },)
+        axios.post("https://improveyourself-api.azurewebsites.net/api/auth/login?email="+email+"&password="+password)
         .then((response) => {
-          const action = { type: "LOGIN_USER", user: {token: response.data.token} }
-          props.dispatch(action);
-          userInfos(response.data.token, props.dispatch, true, props);
-          console.log(props.user.infos[0]);
-        
+          getData(props,true, response.data);    
+          console.log(response.data)
         })
         .catch((error) => {
           Alert.alert(
             "Erreur",
             "Impossible de se connecter, merci de réessayer."
           )
-        });*/
+        });
     }
 
     return (
@@ -78,12 +75,6 @@ function ConnexionScreen(props) {
                 onPress={() => login(email, password)}>
                 <Text style={styles.loginText}>Connexion</Text>
             </TouchableOpacity>
-            {/*} <TouchableOpacity 
-          style={styles.signInBtn} 
-          onPress={() => props.navigation.navigate('Inscription')}
-         >
-          <Text style={styles.signInText}>Vous n}'avez pas de compte ? Inscrivez-vous</Text>
-    </TouchableOpacity>*/}
             <Modal style={styles.modal}
                 animationType="slide"
                 transparent={true}
@@ -101,7 +92,7 @@ function ConnexionScreen(props) {
     );
 }
 
-/*
+
 const mapStateToProps = (state) => {
   return {
     user: state.login.user,
@@ -115,14 +106,13 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
  
-export default connect(mapStateToProps, mapDispatchToProps)(ConnexionScreen);*/
-export default ConnexionScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(ConnexionScreen);
 
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#000",
+        backgroundColor: "#fff",
         alignItems: "center",
         justifyContent: "center",
     },
@@ -135,7 +125,7 @@ const styles = StyleSheet.create({
 
     inputView: {
         width: "85%",
-        height: 75,
+        height: 65,
         marginBottom: 20,
         alignItems: "flex-start",
         backgroundColor: "#292B36",
@@ -157,7 +147,7 @@ const styles = StyleSheet.create({
     forgot_button: {
         height: 30,
         marginBottom: 30,
-        color: "#fff",
+        color: "#000",
         fontSize: 14,
         fontWeight: "600"
     },
@@ -165,7 +155,7 @@ const styles = StyleSheet.create({
     loginBtn: {
         width: "75%",
         borderRadius: 25,
-        height: 70,
+        height: 55,
         alignItems: "center",
         justifyContent: "center",
         marginTop: 20,

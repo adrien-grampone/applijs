@@ -3,111 +3,44 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect } from "react";
 import Home from './screens/Home';
 import Objectifs from './screens/Objectifs';
+import ModuleDetails from './screens/ModuleDetails';
+import ObjectifDetails from './screens/ObjectifDetails';
 import {
     StyleSheet,
     Image,
     Text,
 } from "react-native";
-/*import { Provider } from 'react-redux';
-import store from "./store/configureStore";*/
+import { Provider } from 'react-redux';
+import store from "./store/configureStore";
 import LoginForm from './components/loginForm';
+import Settings from './screens/Settings';
+import Offres from './screens/Offres';
 
 
 
 const Stack = createStackNavigator();
 function App() {
     return (
+        <Provider store={store.store}>
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Connexion">
                 <Stack.Screen name="Connexion" component={LoginForm} options={{ headerShown: false }} />
                 <Stack.Screen name="Accueil" component={Home}/>
                 <Stack.Screen name="Objectifs" component={Objectifs}/>
-        {/*<Stack.Screen name="MonCompte" component={MonCompte} options={{
-            title: 'Mon compte',
-            headerStyle: {
-              backgroundColor: variablesGlobales.noir,
-              borderWidth: 0,
-              shadowRadius: 0,
-              shadowOffset: {
-                height: 0,
-              },
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}/>
-          <Stack.Screen name="Produits" component={Produits} options={{
-            title: 'Produits',
-            headerStyle: {
-              backgroundColor: variablesGlobales.noir,
-              borderWidth: 0,
-              shadowRadius: 0,
-              shadowOffset: {
-                height: 0,
-              },
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}/>
-          <Stack.Screen name="Chat" component={Chat} options={{
-            title: 'Chat',
-            headerStyle: {
-              backgroundColor: variablesGlobales.noir,
-              borderWidth: 0,
-              shadowRadius: 0,
-              shadowOffset: {
-                height: 0,
-              },
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}/>
-        
-         <Stack.Screen name="VisiteDetails" component={VisiteDetails} options={{
-           title: 'Détails de ma visite',
-            headerStyle: {
-              backgroundColor: variablesGlobales.noir,
-              borderWidth: 0,
-              shadowRadius: 0,
-              shadowOffset: {
-                height: 0,
-              },
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}/>
-         <Stack.Screen name="ObjectifDetails" component={ObjectifDetails} options={{
-           title: 'Détails de mon objectif',
-            headerStyle: {
-              backgroundColor: variablesGlobales.noir,
-              borderWidth: 0,
-              shadowRadius: 0,
-              shadowOffset: {
-                height: 0,
-              },
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}/>*/}
+                <Stack.Screen name="ModuleDetails" component={ModuleDetails}/>
+                <Stack.Screen name="ObjectifDetails" component={ObjectifDetails}/>
+                <Stack.Screen name="Settings" component={Settings}/>
+                <Stack.Screen name="Offres" component={Offres}/>
             </Stack.Navigator>
         </NavigationContainer>
+        </Provider>
     );
 }
-
-/*
 const mapStateToProps = (state) => {
     return {
-        user: state.user
+      data: state.data
     }
-}*/
+  }
+  
+  export default App; 
 
-export default App;
