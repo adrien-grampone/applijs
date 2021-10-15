@@ -4,24 +4,15 @@ import {
     Text,
     View,
     Image,
-    TextInput,
     TouchableOpacity,
-    Modal,
-    SafeAreaView,
-    Dimensions,
     ScrollView,
     RefreshControl
 } from "react-native";
-import { Provider, connect } from 'react-redux';
-//import userInfos from './functionUserInfos';
+import { connect } from 'react-redux';
 import SingleTheme from "../components/singleTheme";
 import SingleModule from '../components/singleModule';
 import { Icon } from 'react-native-elements';
 import getData from '../components/functionGetData';
-
-
-
-const windowHeight = Dimensions.get('window').height;
 
 function Home(props) {
 

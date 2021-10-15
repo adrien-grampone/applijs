@@ -3,20 +3,14 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
-    TextInput,
-    TouchableOpacity,
-    Modal,
     SafeAreaView,
     Dimensions,
     RefreshControl
 } from "react-native";
-import { Icon } from 'react-native-elements'
 import { ScrollView } from "react-native-gesture-handler";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import SingleObjectif from '../components/singleObjectif';
 import getData from '../components/functionGetData';
-const windowHeight = Dimensions.get('window').height;
 
 
 

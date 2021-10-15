@@ -11,7 +11,7 @@ import {
     Dimensions,
     Alert
 } from "react-native";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import getData from './functionGetData';
 import axios from 'axios';
 
@@ -28,7 +28,6 @@ function ConnexionScreen(props) {
     const closeModal = () => {
         setModalVisible(false);
     }
-
 
     function login(email, password) {
         axios.post("https://improveyourself-api.azurewebsites.net/api/auth/login?email="+email+"&password="+password)

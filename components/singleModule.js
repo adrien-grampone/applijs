@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Modal, SafeAreaView, Alert} from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements';
-const windowHeight = Dimensions.get('window').height;
 
 
 

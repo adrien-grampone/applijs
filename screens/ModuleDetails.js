@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
-    StyleSheet,
     Text,
     View,
-    Image,
-    TextInput,
-    TouchableOpacity,
-    Modal,
     SafeAreaView,
     Dimensions,
     ScrollView,
     useWindowDimensions
 } from "react-native";
-import { Icon } from 'react-native-elements';
-import { WebView } from 'react-native-webview';
 import HTML from 'react-native-render-html';
-const windowHeight = Dimensions.get('window').height;
 
 
 function ModuleDetails(props) {

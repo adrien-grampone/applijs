@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     Text,
-    TouchableOpacity,
     SafeAreaView,
     ScrollView,
     View,
-    Image
 } from "react-native";
 import { Icon } from 'react-native-elements';
 

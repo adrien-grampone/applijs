@@ -23,7 +23,6 @@ export default function getData(props,redirection, token) {
         })
         .then((responseObj) => {
             const action = { type: "LOGIN_USER", themes: themes, modules: modules, objectifs: responseObj.data, user: token}
-            //const action = { type: "LOGIN_USER", themes: themes, modules: modules, objectifs: responseObj.data}
             props.dispatch(action);
             if (redirection == true) {
                 props.navigation.replace('Accueil');

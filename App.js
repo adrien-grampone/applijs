@@ -5,18 +5,11 @@ import Home from './screens/Home';
 import Objectifs from './screens/Objectifs';
 import ModuleDetails from './screens/ModuleDetails';
 import ObjectifDetails from './screens/ObjectifDetails';
-import {
-    StyleSheet,
-    Image,
-    Text,
-} from "react-native";
 import { Provider } from 'react-redux';
 import store from "./store/configureStore";
 import LoginForm from './components/loginForm';
 import Settings from './screens/Settings';
 import Offres from './screens/Offres';
-
-
 
 const Stack = createStackNavigator();
 function App() {
@@ -36,11 +29,6 @@ function App() {
         </Provider>
     );
 }
-const mapStateToProps = (state) => {
-    return {
-      data: state.data
-    }
-  }
-  
-  export default App; 
+
+export default App; 
 

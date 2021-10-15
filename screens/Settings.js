@@ -3,12 +3,11 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
     TouchableOpacity,
     SafeAreaView,
     ScrollView
 } from "react-native";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 
 function Settings(props) {

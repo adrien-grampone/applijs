@@ -3,13 +3,10 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
     TouchableOpacity,
-    SafeAreaView,
     ScrollView,
-    Alert
 } from "react-native";
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 
 function Offres(props) {
